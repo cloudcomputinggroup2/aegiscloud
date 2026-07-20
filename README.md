@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ AegisCloud
+# AegisCloud
 ### Cloud-Native Security Incident Management Platform
 
 *A cloud computing group project built on AWS — eu-north-1*
@@ -15,7 +15,7 @@
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 **AegisCloud** is a full-stack, cloud-hosted **Security Incident Management Platform (CSIMP)** designed for enterprise Security Operations Centres (SOC). It enables security teams to report, triage, manage, and respond to cybersecurity incidents in real time.
 
@@ -23,7 +23,7 @@ This project was developed as a group coursework submission demonstrating the pr
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ```
                        AWS Cloud (eu-north-1)
@@ -47,7 +47,7 @@ Internet ──▶  Nginx (Port 80)                  │
 
 ---
 
-## ☁️ AWS Services Used
+## AWS Services Used
 
 | Service | Purpose | Free Tier |
 |---|---|---|
@@ -60,39 +60,39 @@ Internet ──▶  Nginx (Port 80)                  │
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🔐 Multi-Tenant Authentication
+### Multi-Tenant Authentication
 - Organisation registration with **email domain verification** (real email via Resend)
 - Admin-driven **team member invitations** with 24-hour expiry links
 - Two-Factor Authentication via **email OTP** (6-digit code, 10-minute window)
 - "Trust this device for 30 days" session management
 - Role-based access control: **Super Admin**, **Admin**, **Analyst**, **Viewer**, **Employee**
 
-### 📋 Incident Management
+### Incident Management
 - Create, assign, escalate and close security incidents
 - Priority levels: **Critical**, **High**, **Medium**, **Low**
 - Full incident history, audit trail and status tracking
 - Tag-based categorisation (Malware, Phishing, Ransomware, DDoS, etc.)
 
-### 📁 S3 Evidence Vault
+### S3 Evidence Vault
 - Drag-and-drop file upload directly into incident tickets
-- Files uploaded securely via **Pre-signed S3 URLs** (browser → S3, no server bottleneck)
+- Files uploaded securely via **Pre-signed S3 URLs** (browser to S3, no server bottleneck)
 - Supports screenshots, log files, PCAPs, PDFs, EML email exports
 
-### 🛡️ Security Console
+### Security Console
 - WAF rules management view
 - SOAR playbook automation library
 - Threat intelligence feeds
 
-### 📊 Analytics Dashboard
+### Analytics Dashboard
 - Real-time incident metrics and trend charts
 - AWS architecture visualiser panel
 - Analyst workload distribution view
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 aegiscloud/
@@ -121,7 +121,7 @@ aegiscloud/
 
 ---
 
-## 🚀 Local Development Setup
+## Local Development Setup
 
 ### Prerequisites
 - Node.js 20+
@@ -162,7 +162,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🖥️ EC2 Deployment
+## EC2 Deployment
 
 See the full **[EC2_DEPLOYMENT_GUIDE.md](./EC2_DEPLOYMENT_GUIDE.md)** for detailed steps.
 
@@ -181,7 +181,7 @@ Your app will be live at `http://<your-ec2-ip>` automatically.
 
 ---
 
-## 🔑 DynamoDB Tables Provisioned
+## DynamoDB Tables Provisioned
 
 | Table Name | Primary Key | Purpose |
 |---|---|---|
@@ -194,12 +194,12 @@ Your app will be live at `http://<your-ec2-ip>` automatically.
 
 ---
 
-## 👥 Group Members
+## Group Members
 
 > *(Add your group members' names here)*
 
 ---
 
-## 📄 License
+## License
 
 This project is submitted as academic coursework. All rights reserved.
