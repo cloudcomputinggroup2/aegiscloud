@@ -73,16 +73,14 @@ export const CSIMPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return saved ? JSON.parse(saved) : INITIAL_ORGS;
   });
 
-  const [currentOrg, setCurrentOrg] = useState<Organization>(organizations[0] || INITIAL_ORGS[0]);
+  const [currentOrg, setCurrentOrg] = useState<Organization>(organizations[0]);
 
   const [users, setUsers] = useState<User[]>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY_USERS);
     return saved ? JSON.parse(saved) : MOCK_USERS;
   });
 
-  const [currentUser, setCurrentUser] = useState<User>(() => {
-    return users.find(u => u.orgId === currentOrg.id && u.role === 'ADMIN') || users[0];
-  });
+  const [currentUser, setCurrentUser] = useState<User>(users[0]);
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH);
@@ -129,14 +127,7 @@ export const CSIMPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [confirmConfig, setConfirmConfig] = useState<ConfirmConfig | null>(null);
 
-  const [notifications, setNotifications] = useState<{ id: string; message: string; timestamp: string; type: 'info' | 'success' | 'warning' | 'alert' }[]>([
-    {
-      id: 'n-1',
-      message: `Logged into ${currentOrg.name} as ${currentUser.name} (${currentUser.role}).`,
-      timestamp: new Date().toLocaleTimeString(),
-      type: 'info',
-    }
-  ]);
+  const [notifications, setNotifications] = useState<{ id: string; message: string; timestamp: string; type: 'info' | 'success' | 'warning' | 'alert' }[]>([]);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY_ORGS, JSON.stringify(organizations));

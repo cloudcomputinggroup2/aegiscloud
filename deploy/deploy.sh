@@ -25,6 +25,7 @@ sudo ln -sf /etc/nginx/sites-available/aegiscloud /etc/nginx/sites-enabled/
 # Remove default nginx welcome page
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo systemctl restart nginx
+sudo systemctl enable nginx   # Ensure Nginx starts automatically on reboot
 
 # 4. Setup Backend
 echo "⚙️ Configuring Backend (Node.js/PM2)..."
@@ -40,3 +41,4 @@ pm2 save
 echo "To make PM2 start on boot, run: pm2 startup"
 
 echo "✅ Deployment Complete! AegisCloud is now serving on port 80."
+echo "Run ./deploy/setup-ssl.sh to enable HTTPS with Let's Encrypt"

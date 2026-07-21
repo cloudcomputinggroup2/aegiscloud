@@ -8,13 +8,7 @@ import { useCSIMP } from '../lib/store';
 import { OtpVerifyView } from './OtpVerifyView';
 
 const API           = '/api/v1';
-const DEMO_PASSWORD = import.meta.env.VITE_DEFAULT_DEMO_PASSWORD || 'Demo@Aegis2026!';
 
-const DEMO_ACCOUNTS = [
-  { email: 'marcus.brody@aegiscloud.corp',  role: 'ADMIN',    name: 'Marcus Brody' },
-  { email: 'sarah.chen@aegiscloud.corp',    role: 'ANALYST',  name: 'Sarah Chen' },
-  { email: 'jane.doe@aegiscloud.corp',      role: 'EMPLOYEE', name: 'Jane Doe' },
-];
 
 const STATS = [
   { value: '23K+',    label: 'WAF Events Today' },
@@ -81,7 +75,7 @@ export const AuthScreen: React.FC = () => {
     setError('');
     if (!email.trim())  { triggerShake('Please enter your corporate email.'); return; }
     if (!password)      { triggerShake('Password is required.'); return; }
-    if (password !== DEMO_PASSWORD) { triggerShake('Invalid credentials. Check your email or password.'); return; }
+
     setLoading(true);
     try {
       const res  = await fetch(`${API}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
@@ -95,12 +89,7 @@ export const AuthScreen: React.FC = () => {
         setShowOtp(true);
       }
     } catch {
-      // Offline fallback: skip OTP, validate demo password locally
-      if (password === DEMO_PASSWORD) {
-        login(email, 'Work Email (offline)'); setActiveTab('dashboard');
-      } else {
-        triggerShake('Server unreachable. Check backend or use demo accounts below.');
-      }
+      triggerShake('Unable to reach the server. Please try again.');
     }
     setLoading(false);
   };
@@ -117,7 +106,7 @@ export const AuthScreen: React.FC = () => {
       if (res.ok) { setOtpSessionId(data.session_id); setOtpEmail(email); setShowOtp(true); }
       else triggerShake(data.error || 'SSO authentication failed.');
     } catch {
-      login(email, ssoProvider); setActiveTab('dashboard');
+      triggerShake('Server unavailable. Please try again.');
     }
     setLoading(false);
   };
@@ -127,8 +116,14 @@ export const AuthScreen: React.FC = () => {
     e.preventDefault(); setError('');
     if (!email.trim()) { triggerShake('Enter the email linked to your hardware key.'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    login(email, 'FIDO2 YubiKey'); setActiveTab('dashboard');
+    try {
+      const res  = await fetch(`${API}/auth/webauthn`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+      const data = await res.json();
+      if (res.ok) { setOtpSessionId(data.session_id); setOtpEmail(email); setShowOtp(true); }
+      else triggerShake(data.error || 'WebAuthn authentication failed.');
+    } catch {
+      triggerShake('Server unavailable. Please try again.');
+    }
     setLoading(false);
   };
 
@@ -161,13 +156,7 @@ export const AuthScreen: React.FC = () => {
     setForgotSent(true); setLoading(false);
   };
 
-  // ── QUICK LOGIN ───────────────────────────────────────────────────────────
-  const quickLogin = async (qEmail: string) => {
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 400));
-    login(qEmail, 'Evaluator Quick Auth'); setActiveTab('dashboard');
-    setLoading(false);
-  };
+
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -373,20 +362,7 @@ export const AuthScreen: React.FC = () => {
                       </form>
                     )}
 
-                    {/* Demo quick-login */}
-                    <details className="text-center">
-                      <summary className="text-[11px] text-[#4a5568] hover:text-[#7d8fa8] cursor-pointer list-none select-none">Evaluator / Demo Access ↓</summary>
-                      <div className="mt-3 grid grid-cols-3 gap-1.5">
-                        {DEMO_ACCOUNTS.map(a => (
-                          <button key={a.email} onClick={() => quickLogin(a.email)} disabled={loading}
-                            className="py-1.5 px-2 rounded-lg bg-[#0d1017] hover:bg-[#1c2030] border border-[#1e2a3a] hover:border-[#f38020]/40 text-[10px] font-semibold text-slate-300 transition-all">
-                            <div className="font-bold text-white">{a.role}</div>
-                            <div className="text-[#4a5568] truncate">{a.name}</div>
-                          </button>
-                        ))}
-                      </div>
-                      <p className="text-[10px] text-[#4a5568] mt-2 font-mono">Password: {DEMO_PASSWORD}</p>
-                    </details>
+
                   </>
                 ) : (
                   /* REGISTER FORM */

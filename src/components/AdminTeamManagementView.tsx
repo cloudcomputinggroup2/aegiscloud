@@ -76,11 +76,7 @@ export const AdminTeamManagementView: React.FC = () => {
       setTimeout(() => { setIsInviteOpen(false); setSubmitSuccess(''); }, 1500);
       fetchPendingInvites();
     } catch {
-      // Offline fallback: show success anyway
-      setSubmitSuccess(`Invite sent (demo mode — backend offline)`);
-      addNotification(`📧 Invite sent to ${name} (${role}) — demo mode`, 'info');
-      setName(''); setEmail(''); setRole('EMPLOYEE'); setDepartment('');
-      setTimeout(() => { setIsInviteOpen(false); setSubmitSuccess(''); }, 1500);
+      setSubmitError('Failed to send invite. Please check backend connection.');
     }
     setSubmitting(false);
   };

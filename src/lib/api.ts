@@ -18,7 +18,7 @@ export const ApiService = {
   getHeaders: (orgId?: string) => ({
     'Content-Type': 'application/json',
     'X-Aegis-Org-Id': orgId || '',
-    'Authorization': `Bearer ${localStorage.getItem('aegis_jwt_token') || 'demo-token'}`,
+    'Authorization': `Bearer ${localStorage.getItem('aegis_jwt_token') || ''}`,
   }),
 
   // Endpoints Mapping Table
