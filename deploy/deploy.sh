@@ -34,7 +34,7 @@ cd ..
 
 # 5. Start with PM2
 echo "🚀 Starting server with PM2..."
-pm2 start deploy/ecosystem.config.js
+pm2 start deploy/ecosystem.config.cjs
 pm2 save
 # Optional: Setup PM2 to start on boot
 echo "To make PM2 start on boot, run: pm2 startup"
