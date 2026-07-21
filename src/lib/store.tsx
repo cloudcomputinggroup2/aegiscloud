@@ -138,7 +138,7 @@ export const CSIMPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [organizations, users, incidents, broadcasts, isAuthenticated]);
 
   useEffect(() => {
-    if (currentUser.role === 'EMPLOYEE' && activeTab !== 'incidents' && activeTab !== 'my-reports') {
+    if (currentUser?.role === 'EMPLOYEE' && activeTab !== 'incidents' && activeTab !== 'my-reports') {
       setActiveTab('incidents');
     }
   }, [currentUser]);

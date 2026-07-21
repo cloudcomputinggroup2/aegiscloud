@@ -103,7 +103,7 @@ function AppShell() {
   if (urlToken?.type === 'invite')     return <AcceptInviteView token={urlToken.token} />;
   if (urlToken?.type === 'verify-org') return <VerifyOrgView    token={urlToken.token} />;
 
-  if (!isAuthenticated) return <AuthScreen />;
+  if (!isAuthenticated || !currentUser) return <AuthScreen />;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0d1017] text-slate-100 font-sans antialiased selection:bg-[#f38020] selection:text-black">
