@@ -85,7 +85,7 @@ const MainContent: React.FC = () => {
 
 // ── App shell (post-auth layout) ─────────────────────────────────────────────
 function AppShell() {
-  const { isAuthenticated, confirmConfig, closeConfirmation } = useCSIMP();
+  const { isAuthenticated, currentUser, confirmConfig, closeConfirmation } = useCSIMP();
   const [isSessionLocked, setIsSessionLocked] = useState(false);
 
   // Check URL for invite / org-verify tokens FIRST, before auth guard
